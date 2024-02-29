@@ -32,13 +32,14 @@
                     <a href="javascript:void(0)" class="mr-4 text-sm font-medium text-blue-600">Forget password?</a>
                     </div>
                     <button class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-blue-100 bg-blue-600">Sign In</button>
-                    <p class="text-sm leading-relaxed text-gray-900">Not registered yet? <a href="javascript:void(0)" class="font-bold text-grey-700">Create an Account</a></p>
+                    <p class="text-sm leading-relaxed text-gray-900">Not registered yet? <router-link :to="{name: 'singup'}" class="font-bold text-grey-700">Create an Account</router-link></p>
                 </form>
                 </div>
             </div>
         </div>
         </div>
     </div>
+    <router-view/>
 </template>
 
 <script lang="ts" setup>
