@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SingupView from '../views/SingupView.vue'
+import LoggedView from '../views/LoggedView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/singup',
     name: 'singup',
     component: SingupView
+  },
+  {
+    path: '/logged',
+    name: 'logged',
+    component: LoggedView
   },
   {
     path: '/about',

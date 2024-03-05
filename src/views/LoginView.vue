@@ -17,9 +17,9 @@
                     <hr class="h-0 border-b border-solid border-gray-500 grow">
                     </div>
                     <label for="email" class="mb-2 text-sm text-start text-gray-900">Email*</label>
-                    <input id="email" type="email" placeholder="mail@loopple.com" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-gray-400 mb-7 placeholder:text-gray-700 bg-gray-200 text-dark-gray-900 rounded-2xl"/>
+                    <input id="email" type="email" placeholder="mail@loopple.com" v-model="email" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-gray-400 mb-7 placeholder:text-gray-700 bg-gray-200 text-dark-gray-900 rounded-2xl"/>
                     <label for="password" class="mb-2 text-sm text-start text-gray-900">Password*</label>
-                    <input id="password" type="password" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-gray-400 placeholder:text-gray-700 bg-gray-200 text-dark-gray-900 rounded-2xl"/>
+                    <input id="password" type="password" v-model="password" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-gray-400 placeholder:text-gray-700 bg-gray-200 text-dark-gray-900 rounded-2xl"/>
                     <div class="flex flex-row justify-between mb-8">
                     <label class="relative inline-flex items-center mr-3 cursor-pointer select-none">
                         <input type="checkbox" checked value="" class="sr-only peer">
@@ -31,18 +31,39 @@
                     </label>
                     <a href="javascript:void(0)" class="mr-4 text-sm font-medium text-blue-600">Forget password?</a>
                     </div>
-                    <button class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-blue-100 bg-blue-600">Sign In</button>
+                    <button class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-blue-100 bg-blue-600" @click.prevent="login(email, password)">Ingresa</button>
                     <p class="text-sm leading-relaxed text-gray-900">Not registered yet? <router-link :to="{name: 'singup'}" class="font-bold text-grey-700">Create an Account</router-link></p>
                 </form>
                 </div>
             </div>
         </div>
+        {{ jwt }}
+        {{ message }}
+        {{ status }}
         </div>
     </div>
     <router-view/>
 </template>
 
 <script lang="ts" setup>
+    import {ref} from 'vue'
+    import { useNotes } from '@/store/store';
+    let email = ""
+    let password = ""
+    const store = useNotes()
+    let jwt = ref("")
+    let message = ref("")
+    let status= ref(false)
+    
+    const login = async (email:string, password:string)=> {
+        await store.login(email, password)
+        jwt.value = store.jwt
+        message.value = store.message
+        status.value = store.status
+    }
+
+
+
 
 </script>
 
