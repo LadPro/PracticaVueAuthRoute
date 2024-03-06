@@ -1,7 +1,9 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Home</router-link> | 
+    <router-link :to="{name:'login'}">Ingrese</router-link> | 
+    <router-link :to="{name:'singup'}">Registrese</router-link> | 
+    <router-link :to="{name:'logged'}">Notas</router-link>
   </nav>
   <router-view/>
 </template>
