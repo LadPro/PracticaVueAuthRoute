@@ -28,6 +28,12 @@ export const useNotes = defineStore('notes',{
             this.jwt = service.getToken()
             this.message = service.getMessage()
             this.status = service.getStatus()
+        } , 
+        async logout(){
+            
+            this.jwt = ""
+            this.message = ""
+            this.status = false
         }  
     }
 })

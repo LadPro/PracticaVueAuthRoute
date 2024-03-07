@@ -1,4 +1,8 @@
 import {ref, Ref} from "vue"
+interface error {
+    email: [""]
+}
+
 
 class authService {
     private jwt:string
@@ -78,9 +82,14 @@ class authService {
             })
             const response = await res.json()
 
-            this.message = response.message
-            this.jwt = response.token
             this.status = response.status
+            if ("errors" in response){
+                this.message = response.errors.email[0]
+            }else{
+
+                this.message = response.message
+                this.jwt = response.token
+            }
             
         }
         catch(error:any){

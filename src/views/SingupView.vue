@@ -38,16 +38,18 @@
 import GoogleButton from '@/components/GoogleButton.vue';
 import { ref, Ref, computed } from 'vue';
 import { useNotes } from '@/store/store';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const store = useNotes()
 const nombre = ref("")
 const email = ref("")
 const password = ref("")
 const repassword = ref("")
 
-const jwt = ref("1")
+const jwt = ref("")
 const message = ref("")
-const status = ref("")
+const status = ref(false)
 
 const checkPassword = computed(()=>{return password.value === repassword.value})
 const checkDatos = computed(()=>{return checkPassword.value && nombre.value !== "" && email.value !== "" && password.value !== ""})
@@ -57,6 +59,20 @@ const checkDatos = computed(()=>{return checkPassword.value && nombre.value !== 
 const register = async (nombre:string, email:string, password:string) =>{
     await store.register(nombre, email, password)
     jwt.value = store.jwt
+    message.value = store.message
+    status.value = store.status
+
+    if(store.auth){
+        alert(store.message)
+        router.push("logged")
+    }else if (store.message == "The email has already been taken."){
+        let gotoLogin = confirm("El email ya se encuentra registrado desea ir a la pagina de ingreso")
+        if (gotoLogin){router.push("login")}
+
+    }else{
+        alert(store.message)
+    }
+
 }
 
 

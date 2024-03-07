@@ -5,6 +5,8 @@ import LoginView from '../views/LoginView.vue'
 import SingupView from '../views/SingupView.vue'
 import LoggedView from '../views/LoggedView.vue'
 import LoginplsView from '../views/LoginplsView.vue'
+import AlreadyloggedView from '../views/AlreadyloggedView.vue'
+import LogoutView from '../views/LogoutView.vue'
 
 
 
@@ -12,22 +14,45 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    
   },
   {
     path: '/loginpls',
     name: 'loginpls',
-    component: LoginplsView
+    component: LoginplsView,
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutView,
+    meta:{
+      requireAuth : true
+    }
+  },
+  {
+    path: '/alreadylogged',
+    name: 'alreadylogged',
+    component: AlreadyloggedView,
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    meta:{
+      requireUnAuth : true
+    }
   },
   {
     path: '/singup',
     name: 'singup',
-    component: SingupView
+    component: SingupView,
+    meta:{
+      requireUnAuth : true
+    }
   },
   {
     path: '/logged',
@@ -47,13 +72,19 @@ const router = createRouter({
 router.beforeEach((to, from, next)=>{
   const auth = true
   const needAuth = to.meta.requireAuth
+  const needNoAuth = to.meta.requireUnAuth
   const store = useNotes()
-  console.log(store.jwt)
   if(needAuth && !store.auth){
     next('loginpls')
-  }else{
-    next()
+    return
+    }
+  if(needNoAuth && store.auth){
+    next('Alreadylogged')
+    return
   }
-})
+  next()
+  }
+
+)
 
 export default router
