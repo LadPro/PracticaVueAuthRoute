@@ -48,7 +48,6 @@ router.beforeEach((to, from, next)=>{
   const auth = true
   const needAuth = to.meta.requireAuth
   const store = useNotes()
-  console.log(store.auth)
   console.log(store.jwt)
   if(needAuth && !store.auth){
     next('loginpls')

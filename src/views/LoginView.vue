@@ -44,6 +44,7 @@
 
 <script lang="ts" setup>
     import {ref} from 'vue'
+    import { useRouter, useRoute } from 'vue-router'
     import { useNotes } from '@/store/store';
     let email = ""
     let password = ""
@@ -52,11 +53,22 @@
     let message = ref("")
     let status= ref(false)
     
+    
+    const router = useRouter();
+
+    
     const login = async (email:string, password:string)=> {
         await store.login(email, password)
         jwt.value = store.jwt
         message.value = store.message
         status.value = store.status
+
+        if (!store.status){
+            alert(store.message)
+        }else{
+            router.push('logged')
+            
+        }
     }
 
 
