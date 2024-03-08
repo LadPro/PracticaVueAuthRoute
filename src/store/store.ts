@@ -53,7 +53,7 @@ export const useNotes = defineStore('notes',{
             await service.postNotes(this.jwt, content)
             this.message = service.getMessage()
             this.notas = service.getNotes()
-
+            
         }
 
     }
