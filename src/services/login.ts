@@ -8,7 +8,7 @@ class authService {
     private jwt:string
     private message:string
     private status:boolean
-    private notas:Ref<Array<string>>
+    private notas:Array<string>
     private urlNote
     private urlLogin 
     private urlRegister 
@@ -16,7 +16,7 @@ class authService {
     constructor(){
         this.jwt = ""
         this.message = ""
-        this.notas = ref([""])
+        this.notas = [""]
         this.status = false
         this.urlNote = process.env.VUE_APP_URL_NOTES
         this.urlLogin = process.env.VUE_APP_URL_LOGIN
@@ -117,7 +117,6 @@ class authService {
 
             this.message = response.message
             await this.fetchNotes(jwt)
-            
         }
         catch(error:any){
             console.log
@@ -138,8 +137,9 @@ class authService {
                 },
             })
             const response = await res.json()
-            this.notas.value = response
-            
+            this.notas = response
+            console.log(jwt)
+
         }
         catch(error:any){
             console.log

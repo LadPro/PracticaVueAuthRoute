@@ -6,11 +6,13 @@ export const useNotes = defineStore('notes',{
         return {
             jwt:"",
             message:"",
-            status:false
+            status:false,
+            notas: [""]
         }
     },
     getters:{
-        auth: (state)=> state.jwt !== ""
+        auth: (state)=> state.jwt !== "",
+        
     },
     actions:{
         async login(email:string, password:string ){
@@ -29,11 +31,30 @@ export const useNotes = defineStore('notes',{
             this.message = service.getMessage()
             this.status = service.getStatus()
         } , 
-        async logout(){
+        logout(){
             
             this.jwt = ""
             this.message = ""
             this.status = false
-        }  
+        },
+        async getNotes(){
+            const service = new authService
+            const jwtSplited = this.jwt.split("|")
+
+            await service.fetchNotes(jwtSplited[1])
+            this.message = service.getMessage()
+            this.notas = service.getNotes()
+
+        },
+        async postNote(content:string){
+            const service = new authService
+            // const jwtSplited = this.jwt.split("|")
+
+            await service.postNotes(this.jwt, content)
+            this.message = service.getMessage()
+            this.notas = service.getNotes()
+
+        }
+
     }
 })

@@ -8,16 +8,14 @@
         <button class="bg-blue-500 my-7 p-3 rounded-xl text-gray-300">Guardar nota</button>
 
     </div>
-    <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-      <article class="flex max-w-xl flex-col items-start justify-between">
+    <div  class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      <article v-for="(nota,index) in store.notas" :key="nota.id" class="flex max-w-xl flex-col items-center justify-between">
         <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
+          <h3 class="mt-3 text-2xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
               <span class="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
+              Nota {{ index + 1}}
           </h3>
-          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
+          <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ nota.content }}</p>
         </div>
       </article>
 
@@ -28,6 +26,17 @@
 </template>
 
 <script lang="ts" setup>
+import { Ref, ref, onMounted } from 'vue';
+import { useNotes } from '@/store/store';
+
+const store = useNotes()
+onMounted(async ()=>{
+  await store.getNotes()
+  console.log(store.notas)
+})
+
+
+
 </script>
 
 <style scoped>
